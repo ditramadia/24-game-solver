@@ -31,7 +31,7 @@ int main()
         case 1:
             // Input numbers
             manualInput(&num1, &num2, &num3, &num4);
-
+            break;
         case 2:
             // Generate numbers
             break;
@@ -47,6 +47,7 @@ int main()
         std::cout << "   " << num1 << " " << num2 << " " << num3 << " " << num4 << std::endl
                   << std::endl;
         break;
+        exit();
     }
 
     return 0;
