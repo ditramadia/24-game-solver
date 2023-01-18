@@ -2,6 +2,7 @@
 
 #include "splash.cpp"
 #include "menu.cpp"
+#include "input.cpp"
 #include "exit.cpp"
 
 int main()
@@ -29,13 +30,23 @@ int main()
         {
         case 1:
             // Input numbers
-            break;
+            manualInput(&num1, &num2, &num3, &num4);
+
         case 2:
             // Generate numbers
             break;
         case 3:
+            running = false;
             exit();
+            return 0;
         }
+
+        // Display cards
+        std::cout << std::endl
+                  << "Cards value:" << std::endl;
+        std::cout << "   " << num1 << " " << num2 << " " << num3 << " " << num4 << std::endl
+                  << std::endl;
+        break;
     }
 
     return 0;
