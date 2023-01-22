@@ -3,7 +3,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 #include <cstdlib>
+#include <fstream>
 
 #include "splash.cpp"
 #include "menu.cpp"
@@ -11,6 +13,7 @@
 #include "input.cpp"
 #include "generate.cpp"
 #include "calculation.cpp"
+#include "save.cpp"
 #include "exit.cpp"
 
 int main()
@@ -76,10 +79,46 @@ int main()
         // Solutions
         std::vector<std::string> solutions = calculation(cardStrVec);
 
-        std::cout << "test" << std::endl;
+        // Display solutions
+        std::cout << solutions.size() << " solutions found:" << std::endl;
         for (auto solution : solutions)
         {
-            std::cout << solution << std::endl;
+            std::cout << "  -- " << solution << std::endl;
+        }
+        std::cout << std::endl;
+
+        // Save menu
+        int saveOption = 0;
+
+        while (saveOption < 1 || saveOption > 3)
+        {
+            saveMenu();
+
+            std::cout << "Select option: ";
+            std::cin >> saveOption;
+            std::cout << std::endl;
+        }
+
+        switch (saveOption)
+        {
+        case 1:
+        { // Save
+            std::string filename = "../test/" + cardStrVec[0] + "_" + cardStrVec[1] + "_" + cardStrVec[2] + "_" + cardStrVec[3] + ".txt";
+            save(solutions, filename);
+
+            break;
+        }
+        case 2:
+        {
+            std::cout << std::endl;
+            break;
+        }
+        case 3:
+        {
+            running = false;
+            exit();
+            return 0;
+        }
         }
     }
 

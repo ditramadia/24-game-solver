@@ -81,16 +81,16 @@ std::vector<std::string> permuteOperators(std::vector<std::vector<int>> numbersP
                     // Permute brackets
 
                     // (N OP N) OP (N OP N)
-                    if (operation(num1, num2, operators[i]) * operation(num3, num4, operators[k]) == 24)
+                    if (operation(operation(num1, num2, operators[i]), operation(num3, num4, operators[k]), operators[j]) == 24)
                     {
                         std::string solution = "(" + std::to_string(num1) + operators[i] + std::to_string(num2) + ")" + operators[j] + "(" + std::to_string(num3) + operators[k] + std::to_string(num4) + ")";
-                        // std::cout << num1 << operators[i] << num2 << operators[j] << num3 << operators[k] << num4 << std::endl;
                         solutions.push_back(solution);
                     }
 
                     // ((N OP N) OP N) OP N
                     if (operation(operation(operation(num1, num2, operators[i]), num3, operators[j]), num4, operators[k]) == 24)
                     {
+                        double res = operation(operation(operation(num1, num2, operators[i]), num3, operators[j]), num4, operators[k]);
                         std::string solution = "((" + std::to_string(num1) + operators[i] + std::to_string(num2) + ")" + operators[j] + std::to_string(num3) + ")" + operators[k] + std::to_string(num4);
                         solutions.push_back(solution);
                     }
@@ -98,6 +98,7 @@ std::vector<std::string> permuteOperators(std::vector<std::vector<int>> numbersP
                     // (N OP (N OP N)) OP N
                     if (operation(operation(num1, operation(num2, num3, operators[j]), operators[i]), num4, operators[k]) == 24)
                     {
+                        double res = operation(operation(num1, operation(num2, num3, operators[j]), operators[i]), num4, operators[k]);
                         std::string solution = "(" + std::to_string(num1) + operators[i] + "(" + std::to_string(num2) + operators[j] + std::to_string(num3) + "))" + operators[k] + std::to_string(num4);
                         solutions.push_back(solution);
                     }
@@ -105,6 +106,7 @@ std::vector<std::string> permuteOperators(std::vector<std::vector<int>> numbersP
                     // N OP (N OP (N OP N))
                     if (operation(num1, operation(num2, operation(num3, num4, operators[k]), operators[j]), operators[i]) == 24)
                     {
+                        double res = operation(num1, operation(num2, operation(num3, num4, operators[k]), operators[j]), operators[i]);
                         std::string solution = std::to_string(num1) + operators[i] + "(" + std::to_string(num2) + operators[j] + "(" + std::to_string(num3) + operators[k] + std::to_string(num4) + "))";
                         solutions.push_back(solution);
                     }
@@ -112,6 +114,7 @@ std::vector<std::string> permuteOperators(std::vector<std::vector<int>> numbersP
                     // // N OP ((N OP N) OP N)
                     if (operation(num1, operation(operation(num2, num3, operators[j]), num4, operators[k]), operators[i]) == 24)
                     {
+                        double res = operation(num1, operation(operation(num2, num3, operators[j]), num4, operators[k]), operators[i]);
                         std::string solution = std::to_string(num1) + operators[i] + "((" + std::to_string(num2) + operators[j] + std::to_string(num3) + ")" + operators[k] + std::to_string(num4) + ")";
                         solutions.push_back(solution);
                     }
@@ -121,6 +124,17 @@ std::vector<std::string> permuteOperators(std::vector<std::vector<int>> numbersP
     }
 
     return solutions;
+}
+
+void removeDuplicate(std::vector<std::string> &solutions)
+{
+    auto end = solutions.end();
+    for (auto it = solutions.begin(); it != end; ++it)
+    {
+        end = std::remove(it + 1, end, *it);
+    }
+
+    solutions.erase(end, solutions.end());
 }
 
 std::vector<std::string> calculation(std::vector<std::string> cardStrVec)
@@ -135,6 +149,9 @@ std::vector<std::string> calculation(std::vector<std::string> cardStrVec)
 
     // Permute operators
     solutions = permuteOperators(numbersPermutation);
+
+    // Remove duplicates
+    removeDuplicate(solutions);
 
     return solutions;
 }
