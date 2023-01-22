@@ -1,27 +1,3 @@
-int countWords(std::string stringInput)
-{
-    bool isSpace = true;
-    int count = 0;
-
-    for (auto c : stringInput)
-    {
-        if (isspace(c))
-        {
-            isSpace = true;
-        }
-        else
-        {
-            if (isSpace)
-            {
-                ++count;
-                isSpace = false;
-            }
-        }
-    }
-
-    return count;
-}
-
 bool nInputValidation(std::string cardInput)
 {
     return countWords(cardInput) == 4;
@@ -69,7 +45,7 @@ bool cardValidation(std::string cardInput)
     return true;
 }
 
-void manualInput(std::vector<std::string> *cardStrVec)
+std::vector<std::string> manualInput()
 {
     // Display available input
     std::cout << std::endl
@@ -91,24 +67,28 @@ void manualInput(std::vector<std::string> *cardStrVec)
 
     // Input
     std::string cardInput;
-    std::istringstream ss(cardInput);
     std::string token;
+    std::vector<std::string> cardStrVec;
 
     std::cout << "Input your cards: ";
     std::getline(std::cin >> std::ws, cardInput);
+    std::istringstream ss(cardInput);
 
-    // Input Validation
+    // Input validation
     while (!nInputValidation(cardInput) || !cardValidation(cardInput))
     {
-        std::cout << "Please enter 4 valid cards!" << std::endl;
+        std::cout << "Please enter 4 valid cards!" << std::endl
+                  << std::endl;
 
         std::cout << "Input your cards: ";
         std::getline(std::cin >> std::ws, cardInput);
     }
 
-    // Store cards in a list
+    // Store cards in a vector
     while (std::getline(ss, token, ' '))
     {
-        (*cardStrVec).push_back(token);
+        cardStrVec.push_back(token);
     }
+
+    return cardStrVec;
 }

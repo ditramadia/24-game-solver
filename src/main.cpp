@@ -2,10 +2,13 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <cstdlib>
 
 #include "splash.cpp"
 #include "menu.cpp"
+#include "functions.cpp"
 #include "input.cpp"
+#include "generate.cpp"
 #include "exit.cpp"
 
 int main()
@@ -20,8 +23,7 @@ int main()
         // Menu
         menu();
 
-        short option = 0;
-        std::vector<std::string> cardStrVec;
+        int option = 0;
 
         while (option < 1 || option > 3)
         {
@@ -29,29 +31,45 @@ int main()
             std::cin >> option;
         }
 
+        std::vector<std::string> cardStrVec;
+
         switch (option)
         {
         case 1:
-            // Input numbers
-            manualInput(&cardStrVec);
+        { // Input numbers
+            cardStrVec = manualInput();
+
+            // Display cards
+            displayCards(cardStrVec);
+
             break;
+        }
         case 2:
-            // Generate numbers
+        { // Generate numbers
+            int generateOption = 2;
+
+            while (generateOption == 2)
+            {
+                cardStrVec = generateCard();
+
+                // Display cards
+                displayCards(cardStrVec);
+
+                generateMenu();
+
+                std::cout << "Select option: ";
+                std::cin >> generateOption;
+            }
+
             break;
+        }
         case 3:
+        {
             running = false;
             exit();
             return 0;
         }
-
-        // Display card input
-        for (int i = 0; i < cardStrVec.size(); i++)
-        {
-            std::cout << cardStrVec[i];
         }
-
-        break;
-        exit();
     }
 
     return 0;
