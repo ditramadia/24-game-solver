@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
+#include <ctime>
 
 #include "splash.cpp"
 #include "menu.cpp"
@@ -76,8 +77,15 @@ int main()
         }
         }
 
+        // Start timer
+        clock_t timerStart, timerEnd;
+        timerStart = clock();
+
         // Solutions
         std::vector<std::string> solutions = calculation(cardStrVec);
+
+        // Stop timer
+        timerEnd = clock();
 
         // Display solutions
         std::cout << solutions.size() << " solutions found:" << std::endl;
@@ -86,6 +94,12 @@ int main()
             std::cout << "  -- " << solution << std::endl;
         }
         std::cout << std::endl;
+
+        // Display execution time
+        double executionTime = double(timerEnd - timerStart) / double(CLOCKS_PER_SEC);
+        std::cout << "             Execution time: " << executionTime << " seconds" << std::endl
+                  << std::endl;
+        ;
 
         // Save menu
         int saveOption = 0;
