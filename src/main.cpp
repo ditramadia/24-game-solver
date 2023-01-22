@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -9,6 +10,7 @@
 #include "functions.cpp"
 #include "input.cpp"
 #include "generate.cpp"
+#include "calculation.cpp"
 #include "exit.cpp"
 
 int main()
@@ -69,6 +71,15 @@ int main()
             exit();
             return 0;
         }
+        }
+
+        // Solutions
+        std::vector<std::string> solutions = calculation(cardStrVec);
+
+        std::cout << "test" << std::endl;
+        for (auto solution : solutions)
+        {
+            std::cout << solution << std::endl;
         }
     }
 
