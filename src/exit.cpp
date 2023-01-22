@@ -1,5 +1,3 @@
-#include <iostream>
-
 void exit()
 {
     std::cout << std::endl

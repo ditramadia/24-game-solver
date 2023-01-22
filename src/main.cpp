@@ -1,4 +1,7 @@
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
 
 #include "splash.cpp"
 #include "menu.cpp"
@@ -18,7 +21,7 @@ int main()
         menu();
 
         short option = 0;
-        short num1, num2, num3, num4;
+        std::vector<std::string> cardStrVec;
 
         while (option < 1 || option > 3)
         {
@@ -30,7 +33,7 @@ int main()
         {
         case 1:
             // Input numbers
-            manualInput(&num1, &num2, &num3, &num4);
+            manualInput(&cardStrVec);
             break;
         case 2:
             // Generate numbers
@@ -41,11 +44,12 @@ int main()
             return 0;
         }
 
-        // Display cards
-        std::cout << std::endl
-                  << "Cards value:" << std::endl;
-        std::cout << "   " << num1 << " " << num2 << " " << num3 << " " << num4 << std::endl
-                  << std::endl;
+        // Display card input
+        for (int i = 0; i < cardStrVec.size(); i++)
+        {
+            std::cout << cardStrVec[i];
+        }
+
         break;
         exit();
     }

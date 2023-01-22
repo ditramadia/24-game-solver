@@ -1,5 +1,3 @@
-#include <iostream>
-
 void splash()
 {
     std::cout << "                                                   " << std::endl;
